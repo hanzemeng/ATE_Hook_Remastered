@@ -1,5 +1,6 @@
 text_box_length_ratio : 0.7
 text_box_bottom_offset: 75
+font_name : Microsoft YaHei
 font_size : 36
 font_weight : 900
 show_text_tag : 1
