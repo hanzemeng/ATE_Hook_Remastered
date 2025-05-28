@@ -26,6 +26,7 @@ To apply new configs, the original game and ATE_Hook_Remastered.exe must both be
 Below describes the configs:
 * text_box_length_ratio: A real number in (0, 1). Determines the length of the textbox. A value of 0.5 implies the textbox is half the length of the game window, a value of 1 implies the textbox is the same length of the game window.
 * text_box_bottom_offset: An integer in [0, 300). Determines the gap between the bottom of the textbox and the bottom of the game window. A value of 0 implies there is no gap; a value of 50 implies the gap is 50 pixels tall.
+* font_name: A string that indicates the font to use when rendering the text. The font must be installed in the operating system.
 * font_size: An integer in [0, 64]. Determines the size of the translated text.
 * font_weight: An integer in {400, 700, 900}. Determines the boldness of the text. 400 is normal, 700 is bold, 900 is heavy.
 * show_text_tag: An integer in {0, 1}. If the value is 1, then the top left corner shows the tag of the current sentence.
@@ -48,3 +49,6 @@ One can add/remove/modify cast color in ATE_Hook_Remastered_Color.tsv. The file 
 The first column is the cast. The second column is r; the third column is g; the fourth column is b. rgb must each be within [0, 255].<br>
 The first row is the color for sentences with a cast who is not listed in the file.<br>
 Note that for sentences without cast (i.e. sentences without 【】), they will always be white.<br>
+
+## License
+Those who wish to modify/distribute this software should read the LICENSE first.<br>
