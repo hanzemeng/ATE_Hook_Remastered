@@ -48,7 +48,7 @@ The color of the text is determined by the cast, and the cast is the characters 
 One can add/remove/modify cast color in ATE_Hook_Remastered_Color.tsv. The file must use utf-8 encoding.<br>
 The first column is the cast. The second column is r; the third column is g; the fourth column is b. rgb must each be within [0, 255].<br>
 The first row is the color for sentences with a cast who is not listed in the file.<br>
-Note that for sentences without cast (i.e. sentences without 【】), they will always be white.<br>
+Note that sentences without cast (i.e. sentences without 【】) will always be white.<br>
 
 ## License
 Those who wish to modify/distribute this software should read the LICENSE first.<br>
