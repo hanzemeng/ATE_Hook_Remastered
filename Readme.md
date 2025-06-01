@@ -28,6 +28,7 @@ Below describes the configs:
 * text_box_bottom_offset: An integer in [0, 300). Determines the gap between the bottom of the textbox and the bottom of the game window. A value of 0 implies there is no gap; a value of 50 implies the gap is 50 pixels tall.
 * font_name: A string that indicates the font to use when rendering the text. The font must be installed in the operating system.
 * font_size: An integer in [0, 64]. Determines the size of the translated text.
+* outline_size: An integer in [0, 8]. Determines the size of the outline of the rendered text.
 * show_text_tag: An integer in {0, 1}. If the value is 1, then the top left corner shows the tag of the current sentence.
 * show_original_text: An integer in {0, 1}. If the value is 1, then the game still renders the original text.<br>
 
