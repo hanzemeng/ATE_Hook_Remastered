@@ -39,6 +39,7 @@ IDWriteFactory* m_dWriteFactoryPtr = nullptr;
 
 
 int m_skipOnGameProcess = 0;
+int m_gameProcessGap = 0;
 RECT m_lastRenderRect;
 std::string m_lastRenderText = "";
 
@@ -233,7 +234,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		}
 		bool shouldProcess = m_lastRenderRect.left != rect.left || m_lastRenderRect.right != rect.right || m_lastRenderRect.top != rect.top || m_lastRenderRect.bottom != rect.bottom
 			|| m_lastRenderText != translation;
-		if (!shouldProcess)
+		if (!m_showTextTag && !shouldProcess)
 		{
 			LeaveCriticalSection(&m_textBufferCS);
 			return 0;
@@ -273,19 +274,22 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		renderTargetPtr->BeginDraw();
 		renderTargetPtr->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.f));
 
+		if (m_showTextTag)
+		{
+			std::string gameProcessGap = std::to_string(m_gameProcessGap);
+			m_textBuffer[12] = ' ';
+			memcpy(m_textBuffer + 13, &gameProcessGap[0], gameProcessGap.length() + 1);
+			int c = MultiByteToWideChar(CP_UTF8, 0, m_textBuffer, 13+gameProcessGap.length(), m_wideBuffer, m_textBufferSize);
+			IDWriteTextLayout* textLayoutPtr;
+			m_dWriteFactoryPtr->CreateTextLayout(m_wideBuffer, c, renderTextFormatPtr, 400, 200, &textLayoutPtr);
+			textLayoutPtr->SetDrawingEffect(brushPtr, DWRITE_TEXT_RANGE{ 0,(unsigned int)c });
+			textLayoutPtr->Draw(nullptr, textRendererPtr, 0, 0);
+			textRendererPtr->RenderAll(renderTargetPtr, 100, 100, outlineBrushPtr, m_outlineSize, outlineStrokeStylePtr);
+			textLayoutPtr->Release();
+		}
+
 		if (0x00 != m_textBuffer[0])
 		{
-			if (m_showTextTag)
-			{
-				int c = MultiByteToWideChar(CP_UTF8, 0, m_textBuffer, 12, m_wideBuffer, m_textBufferSize);
-				IDWriteTextLayout* textLayoutPtr;
-				m_dWriteFactoryPtr->CreateTextLayout(m_wideBuffer, c, renderTextFormatPtr, 400, 200, &textLayoutPtr);
-				textLayoutPtr->SetDrawingEffect(brushPtr, DWRITE_TEXT_RANGE{ 0,(unsigned int)c });
-				textLayoutPtr->Draw(nullptr, textRendererPtr, 0, 0);
-				textRendererPtr->RenderAll(renderTargetPtr, 100, 100, outlineBrushPtr, m_outlineSize, outlineStrokeStylePtr);
-				textLayoutPtr->Release();
-			}
-
 			textRendererPtr->Clear();
 			translation = m_translations[std::stoi(translation)];
 			int i = 0;
@@ -393,7 +397,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 void OnGameProcess()
 {
 	EnterCriticalSection(&m_textBufferCS);
-	
+	m_gameProcessGap++;
 	if (m_skipOnGameProcess > 0)
 	{
 		m_skipOnGameProcess--;
@@ -401,7 +405,6 @@ void OnGameProcess()
 		return;
 	}
 	
-	//m_skipOnGameProcess++;
 	m_textBuffer[0] = 0x00;
 	LeaveCriticalSection(&m_textBufferCS);
 }
@@ -416,6 +419,7 @@ void OnTextProcess(unsigned long long textTagPtr)
 	}
 	
 	EnterCriticalSection(&m_textBufferCS);
+	m_gameProcessGap = 0;
 	int i = 0;
 	while (ptr[i] != 0x00 && i < m_textBufferSize)
 	{
@@ -425,7 +429,6 @@ void OnTextProcess(unsigned long long textTagPtr)
 	m_textBuffer[i] = 0x00;
 	std::string translation(m_textBuffer + 7, 5);
 	m_skipOnGameProcess = m_translationsPause[std::stoi(translation)];
-	//m_skipOnGameProcess = 0;
 	LeaveCriticalSection(&m_textBufferCS);
 }
 
