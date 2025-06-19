@@ -1,0 +1,36 @@
+🔧 软件定位 
+专为《Muv-Luv Alternative Total Eclipse Remastered》1.0.27版本设计的实时翻译工具。不支持其他版本或其他作品。
+
+
+📥 安装步骤
+定位游戏安装目录（如：Steam\steamapps\common\Muv-Luv Alternative Total Eclipse）
+复制以下5个文件到游戏根目录：（注：禁止重命名文件/创建子文件夹）
+
+ATE_Hook_Remastered.dll
+ATE_Hook_Remastered.exe
+ATE_Hook_Remastered_Color.tsv
+ATE_Hook_Remastered_Config.txt
+ATE_Hook_Remastered_Translation.tsv 
+
+
+🎮 使用流程
+先启动原版游戏
+等待游戏窗口标题加载完成后
+再运行ATE_Hook_Remastered.exe
+关闭游戏时会自动结束翻译进程
+
+
+⚙️ 配置文件说明（通过修改ATE_Hook_Remastered_Config.txt.txt）（建议在补丁正确运行后，再随喜好修改）
+
+参数名称					值类型													
+text_box_length_ratio	0.0-1.0（浮点数），设置文本框的长度（0.5为游戏窗口的一半）。	
+text_box_bottom_offset	0-300（整数），文本框底部间距（像素高度）。			
+font_name		系统字体名，呈现文本时使用的字体。字体必须安装在操作系统中	。
+font_size		1-64（整数），翻译文本大小。
+outline_size		0-8（整数），文字描边厚度（0=无描边）。
+show_text_tag		0或1	显示调试标签（开发者用），如果该值为1，则左上角显示当前句子的tag。
+show_original_text	0或1	如果值为1，则游戏仍然渲染原始文本（日语/英语）。
+
+
+❗开发者部分：
+见https://github.com/hanzemeng/ATE_Hook_Remastered
