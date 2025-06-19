@@ -25,7 +25,7 @@ ATE_Hook_Remastered_Translation.tsv
 参数名称					值类型													
 text_box_length_ratio	0.0-1.0（浮点数），设置文本框的长度（0.5为游戏窗口的一半）。	
 text_box_bottom_offset	0-300（整数），文本框底部间距（像素高度）。			
-font_name		系统字体名，呈现文本时使用的字体。字体必须安装在操作系统中	。
+font_name		系统字体名，呈现文本时使用的字体。字体必须安装在操作系统中。
 font_size		1-64（整数），翻译文本大小。
 outline_size		0-8（整数），文字描边厚度（0=无描边）。
 show_text_tag		0或1	显示调试标签（开发者用），如果该值为1，则左上角显示当前句子的tag。
